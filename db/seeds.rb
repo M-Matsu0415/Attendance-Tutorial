@@ -14,4 +14,3 @@ User.create!(name: "Sample User",
                password: password,
                password_confirmation: password)
 end
-このスクリプトが生成されると、合計61件のサンプルユーザーが生成されます。
