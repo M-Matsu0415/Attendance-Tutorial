@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   
   resources :users do
+<<<<<<< HEAD
      member do
+=======
+    member do
+>>>>>>> add-basic-info
       get 'edit_basic_info'
       patch 'update_basic_info'
     end

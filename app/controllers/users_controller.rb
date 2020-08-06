@@ -1,11 +1,15 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+<<<<<<< HEAD
   before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+=======
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+>>>>>>> add-basic-info
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
 
   def index
-   @users = User.paginate(page: params[:page])
+    @users = User.paginate(page: params[:page])
   end
 
   def show
@@ -37,7 +41,7 @@ class UsersController < ApplicationController
       render :edit      
     end
   end
-  
+
   def destroy
     @user.destroy
     flash[:success] = "#{@user.name}のデータを削除しました。"
@@ -50,6 +54,18 @@ class UsersController < ApplicationController
   def update_basic_info
     if @user.update_attributes(basic_info_params)
       # 更新成功の処理
+    else
+      flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+    end
+    redirect_to users_url
+  end
+
+  def edit_basic_info
+  end
+
+  def update_basic_info
+    if @user.update_attributes(basic_info_params)
+      flash[:success] = "#{@user.name}の基本情報を更新しました。"
     else
       flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
     end
@@ -86,10 +102,9 @@ class UsersController < ApplicationController
     def correct_user
       redirect_to(root_url) unless current_user?(@user)
     end
-    
+
     # システム管理権限所有かどうか判定します。
     def admin_user
       redirect_to root_url unless current_user.admin?
     end
-    
 end
